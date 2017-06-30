@@ -1,0 +1,19 @@
+server {
+        listen 80;
+        server_name <FQDN>;
+        rewrite ^ https://<FQDN> permanent;
+}
+
+server {
+        listen 443;
+        server_name <FQDN>;
+        ssl on;
+        ssl_certificate <CERTIFICATE FILE>;
+        ssl_certificate_key <CERTIFICATE KEY FILE>;
+        keepalive_timeout 70;
+        root <EMPTY DIRECTORY>
+        location / {
+                proxy_pass http://localhost:8040/;
+                proxy_redirect default;
+        }
+}
